@@ -35,5 +35,15 @@ As a little bonus, I've added the flag of the country in the marker's popup. For
 property, that I guess follows the _ISO 3166-1 alpha-3_ standard codification. For the flags I use the ones that I've found in 
 Github's project (https://github.com/adamoliver/Country-Flags-ISO-3).
  
+Answering the questions:
  
- 
+* How would you implement a choropleth map?: Well, as I've explained, I've tried to do it in the current map, but obviously, I don't 
+ have the resources right now to draw the surfaces of every region or city within the GEO JSON data. So what I've done, is using
+ one of the properties of the records (rank_max) that I thought it was for representing the population density of a record. So I've
+ given more importance to that record setting more oppacity and size to the marker.
+  
+* Do you feel a legend would be needed?: In the current map, I don't think a legend is needed. But if we want one, we could add
+  a legend to tell the user why some markers are bigger than others, and why their colors are more intense.
+
+* We love Easter eggs: Not a good easter egg at all, I just added the flags as a bonus to the map, because I'm not an expert  
+  working with maps, so .... TODO
