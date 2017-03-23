@@ -38,6 +38,11 @@ var Map = function (geoData) {
     this.map = L.map("map", {center: [50.8397819, 4.3817422], zoom: this.mapStyle.zoom});
     this.currentLayer = this.buildTileLayer();
     this.map.addLayer(this.currentLayer);
+    this.map.on('zoomend', function(event) {
+        if (event.target._zoom === event.target._layersMaxZoom) {
+            alert("With this map you can't stalk your neighbourgs, don't zoom in more!");
+        }
+    });
 };
 
 Map.prototype.buildTileLayer = function () {

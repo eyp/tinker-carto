@@ -2,7 +2,7 @@
 This simple project is an application that gives a solution for the problem proposed by CARTO 
 in [Frontend CARTO test](https://gist.github.com/xavijam/8bf55f5e4da51bc79d94d676a471f77b).
 
-### Introduction
+### Some decisions
 Everything is written using plain Javascript but the part that renders the map, where I'm 
  using [Leaflet 1.0.3](http://leafletjs.com/2017/01/23/leaflet-1.0.3.html). For the frontend, 
  since it's said that CARTO has its own components, I simply use HTML and a bit of CSS.
@@ -10,11 +10,14 @@ Everything is written using plain Javascript but the part that renders the map, 
 Also, instead of reading the file result of the query proposed, I do an AJAX call to CARTO's server and 
  retrieve the Geo JSON data from there.
  
-### The map
 The map is built once the Geo data is retrieved. Since it could have lot of information, I've decided
- to start with a medium zoom, because if not the map loads more slowly. Related to this, I paint the markers
+ to init with a medium zoom, because if not the map loads more slowly. Related to this, I paint the markers
  asynchronously, so the map is painted almost immediately, and the markers appears in intervals. This way
  the user doesn't have to wait to see a map with some data, and the map doesn't get stalled. 
+
+I've tried to write a clean code, but to be honest, I know it always could be improved.
+ 
+### The map
  
 The size of the markers are based on the **feature.properties.rank_max** property. Higher the rank, bigger the marker.
 Also I've tried to make a kind of _choropleth_ map, assigning a different opacity to the dots, based on the 
@@ -35,15 +38,20 @@ As a little bonus, I've added the flag of the country in the marker's popup. For
 property, that I guess follows the _ISO 3166-1 alpha-3_ standard codification. For the flags I use the ones that I've found in 
 Github's project (https://github.com/adamoliver/Country-Flags-ISO-3).
  
-Answering the questions:
- 
-* How would you implement a choropleth map?: Well, as I've explained, I've tried to do it in the current map, but obviously, I don't 
+### Answering the questions
+**How would you implement a choropleth map?**
+
+ Well, as I've explained, I've tried to do it in the current map, but obviously, I don't 
  have the resources right now to draw the surfaces of every region or city within the GEO JSON data. So what I've done, is using
  one of the properties of the records (rank_max) that I thought it was for representing the population density of a record. So I've
  given more importance to that record setting more oppacity and size to the marker.
   
-* Do you feel a legend would be needed?: In the current map, I don't think a legend is needed. But if we want one, we could add
+**Do you feel a legend would be needed?** 
+
+  In the current map, I don't think a legend is needed. But if we want one, we could add
   a legend to tell the user why some markers are bigger than others, and why their colors are more intense.
 
-* We love Easter eggs: Not a good easter egg at all, I just added the flags as a bonus to the map, because I'm not an expert  
-  working with maps, so .... TODO
+**We love Easter eggs**
+
+  Not a good easter egg at all, I just added the flags as a bonus to the map, because I'm not an expert  
+  working with maps, but finally I decided to add a small thing, just zoom in...
