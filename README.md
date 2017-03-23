@@ -1,4 +1,4 @@
-## CARTO test solution WIP!
+## CARTO test solution
 This simple project is an application that gives a solution for the problem proposed by CARTO 
 in [Frontend CARTO test](https://gist.github.com/xavijam/8bf55f5e4da51bc79d94d676a471f77b).
 
