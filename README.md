@@ -2,6 +2,10 @@
 This simple project is an application that gives a solution for the problem proposed by CARTO 
 in [Frontend CARTO test](https://gist.github.com/xavijam/8bf55f5e4da51bc79d94d676a471f77b).
 
+### Setup
+After cloning the project it's needed to copy or rename config-sample.js to config.js and provide a Mapbox
+access token and a Mapbox project id.
+
 ### Some decisions
 Everything is written using plain Javascript but the part that renders the map, where I'm 
  using [Leaflet 1.0.3](http://leafletjs.com/2017/01/23/leaflet-1.0.3.html). For the frontend, 
