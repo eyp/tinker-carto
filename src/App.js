@@ -17,8 +17,8 @@ App.prototype.requestComplete = function (event) {
     console.log("Geo data has been loaded and parsed, there are", geoData.features.length, "points");
     console.log("Preparing map...");
     this.map = new Map(geoData);
-    document.getElementById("dotsColor").value = this.map.fillColor;
-    document.getElementById("strokeColor").value = this.map.strokeColor;
+    document.getElementById("dotsColor").value = this.map.style.fillColor;
+    document.getElementById("strokeColor").value = this.map.style.strokeColor;
     console.log("Painting data...");
     this.map.refresh();
 };
@@ -33,16 +33,16 @@ App.prototype.start = function () {
     cartoClient.getGeoData(this.requestComplete.bind(this), this.requestError.bind(this));
 };
 
-App.prototype.changeMapStyle = function () {
-    this.map.changeMapStyle(document.getElementById("mapStyle").value);
+App.prototype.changeTheme = function () {
+    this.map.changeTheme(document.getElementById("theme").value);
 };
 
 App.prototype.incrementDotsSize = function () {
-    this.map.changeDotsSize(200);
+    this.map.changeDotsSize(1);
 };
 
 App.prototype.decrementDotsSize = function () {
-    this.map.changeDotsSize(-200);
+    this.map.changeDotsSize(-1);
 };
 
 App.prototype.incrementStrokeSize = function () {

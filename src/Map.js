@@ -1,69 +1,93 @@
 /**
- * Leaflet map.
+ * Map. Used Leaflet library work on it.
  *
  * Created by eyp on 22/03/2017.
  */
 
-function buildStyle(feature, fillColor, radius, strokeSize, strokeColor) {
+/**
+ * Build the style for the markers that are going to be painted in the map.
+ *
+ * @param feature Geo JSON data record.
+ * @param style Style defined in the map.
+ * @returns {{color: (string|*), fillColor: (string|*), fillOpacity: number, radius: *, weight: (number|*)}}
+ */
+function buildStyle(feature, style) {
+    var radius = style.radius + feature.properties.rank_max;
+    if (radius < 0) {
+        radius = 1;
+    }
     return {
-        color: strokeColor,
-        fillColor: fillColor,
+        color: style.strokeColor,
+        fillColor: style.fillColor,
         fillOpacity: (feature.properties.rank_max / 100) * 7,
-        radius: radius * feature.properties.rank_max,
-        weight: strokeSize
+        radius: radius,
+        weight: style.strokeSize
     };
 }
 
-function createMapDataFromFeature(feature, fillColor, radius, strokeSize, strokeColor) {
+/**
+ * Creates the objects that will be used for painting the markers.
+ *
+ * @param feature Geo JSON data record.
+ * @param style Style defined in the map.
+ * @returns {{mapShape: null, feature: null}}
+ */
+function createMapDataFromFeature(feature, style) {
     var dot = {
-        mapShape: null,
-        feature: null
+        mapShape: L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], buildStyle(feature, style)),
+        feature: feature
     };
-    dot.feature = feature;
-    dot.mapShape = L.circle([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], buildStyle(feature, fillColor, radius, strokeSize, strokeColor));
+    // Popup label
     dot.mapShape.bindPopup(feature.properties.name + " (" + feature.properties.adm0name + ")<br>Population between " + feature.properties.pop_min + " and " + feature.properties.pop_max + " people<br>Rank: " + feature.properties.rank_max);
     return dot;
+}
+
+/**
+ * Paint the markers in the map
+ *
+ * @param markers [] Array of markers
+ * @param map Map where the markers will be added.
+ */
+function paintMarkers(markers, map) {
+    markers.forEach(function (dot) {
+        dot.mapShape.addTo(map);
+    });
 }
 
 var Map = function (geoData) {
     var that = this;
     this.mapData = [];
-    this.mapStyle = MapStyle.STREETS;
-    this.strokeSize = 0.5;
-    this.radius = 1000;
-    this.fillColor = "#ff0033";
-    this.strokeColor = "#121280";
+    this.geoData = geoData;
+    this.style = {
+        theme: MapStyle.STREETS,
+        strokeSize: 0.5,
+        radius: -7,
+        fillColor: "#ff0033",
+        strokeColor: "#121280",
+        zoom: 4
+    };
 
-    console.log("Painting feature:", geoData.features[0]);
-    console.log("Painting feature:", geoData.features[1]);
-    console.log("Painting feature:", geoData.features[2]);
-    console.log("Painting feature:", geoData.features[3]);
-    console.log("Painting feature:", geoData.features[4]);
     geoData.features.forEach(function (feature) {
-        that.mapData.push(createMapDataFromFeature(feature, that.fillColor, that.radius, that.strokeSize, that.strokeColor));
+        that.mapData.push(createMapDataFromFeature(feature, that.style));
     });
     console.log("There are", that.mapData.length, "records to paint");
+
+    // Init map and main layer
+    this.map = L.map("map", {center: [50.8397819, 4.3817422], zoom: this.style.zoom});
+    this.currentLayer = this.buildTileLayer();
+    this.map.addLayer(this.currentLayer);
 };
 
-Map.prototype.changeMapStyle = function(mapStyle) {
-    this.mapStyle = mapStyle;
-    this.changeTileLayer(this.buildTileLayer());
-};
-
-function paintDots(dots, that) {
-    dots.forEach(function (dot) {
-        dot.mapShape.addTo(that.map);
-    });
-}
-
-Map.prototype.changeTileLayer = function (newLayer) {
+Map.prototype.changeTheme = function(theme) {
+    this.style.theme = theme;
     this.map.removeLayer(this.currentLayer);
-    this.currentLayer = newLayer;
+    this.currentLayer = this.buildTileLayer();
     this.map.addLayer(this.currentLayer);
 };
 
 Map.prototype.buildTileLayer = function () {
-    return L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/" + this.mapStyle + "/tiles/256/{z}/{x}/{y}?access_token=" + mapBoxAccessToken, {
+    // http://{s}.tile.osm.org/{z}/{x}/{y}.png
+    return L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/" + this.style.theme + "/tiles/256/{z}/{x}/{y}?access_token=" + mapBoxAccessToken, {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 12,
         minZoom: 2,
@@ -72,13 +96,13 @@ Map.prototype.buildTileLayer = function () {
     });
 };
 
-Map.prototype.refresh = function (mapStyle) {
-    this.map = L.map("map", {center: [50.8397819, 4.3817422], zoom: 5});
-    this.currentLayer = this.buildTileLayer(mapStyle);
-    this.map.addLayer(this.currentLayer);
+/**
+ * Paints the markers asynchronously.
+ */
+Map.prototype.refresh = function () {
+    var that = this;
 
     var size = this.mapData.length;
-    var that = this;
     var i = 0;
     for (var from = 0; from < size;) {
         var to = from + 500;
@@ -86,8 +110,9 @@ Map.prototype.refresh = function (mapStyle) {
             to = size;
         }
         console.log("Painting from", from, "to", to);
+        // Paints 500 markers each 150 ms
         var arrayCopy = that.mapData.slice(from, to);
-        setTimeout(paintDots, 100 * i, arrayCopy, that);
+        setTimeout(paintMarkers, 150 * i, arrayCopy, that.map);
         i++;
         from = to;
     }
@@ -95,37 +120,43 @@ Map.prototype.refresh = function (mapStyle) {
 };
 
 Map.prototype.changeDotsSize = function (delta) {
-    this.radius += delta;
-    if (this.radius < 50) {
-        this.radius = 50;
-    }
     var that = this;
-    this.mapData.forEach(function (dot) {
-        dot.mapShape.setRadius(that.radius * dot.feature.properties.rank_max);
+    this.updateMarkers(function () {
+        that.style.radius += delta;
+        if (that.style.radius < -15) {
+            that.style.radius = -15;
+        }
     });
 };
 
 Map.prototype.changeStrokeSize = function (delta) {
-    this.strokeSize += delta;
-    if (this.strokeSize < 0) {
-        this.strokeSize = 0;
-    }
-    this.refreshDotsStyle();
+    var that = this;
+    this.updateMarkers(function () {
+        that.style.strokeSize += delta;
+        if (that.style.strokeSize < 0) {
+            that.style.strokeSize = 0;
+        }
+    });
 };
 
 Map.prototype.changeDotsBaseColor = function (color) {
-    this.fillColor = color;
-    this.refreshDotsStyle();
+    var that = this;
+    this.updateMarkers(function () {
+        that.style.fillColor = color;
+    });
 };
 
 Map.prototype.changeStrokeColor = function (color) {
-    this.strokeColor = color;
-    this.refreshDotsStyle();
+    var that = this;
+    this.updateMarkers(function () {
+        that.style.strokeColor = color;
+    });
 };
 
-Map.prototype.refreshDotsStyle = function () {
+Map.prototype.updateMarkers = function (updateFunction) {
+    updateFunction();
     var that = this;
     this.mapData.forEach(function (dot) {
-        dot.mapShape.setStyle(buildStyle(dot.feature, that.fillColor, that.radius, that.strokeSize, that.strokeColor));
+        dot.mapShape.setStyle(buildStyle(dot.feature, that.style));
     });
 };

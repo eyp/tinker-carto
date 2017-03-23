@@ -8,9 +8,10 @@
 </head>
 <body>
 
+<!-- Controls -->
 <div id="barButtons">
-    <label for="mapStyle">Map style</label>
-    <select id="mapStyle" onchange="app.changeMapStyle()">
+    <label for="theme">Theme</label>
+    <select id="theme" onchange="app.changeTheme()">
         <option value="streets-v10" selected>Streets</option>
         <option value="outdoors-v9">Outdoors</option>
         <option value="light-v9">Light</option>
@@ -22,7 +23,7 @@
     <label for="dotsColor">Dots color</label>
     <input id="dotsColor" class="colorField" type="color" onchange="app.changeDotsBaseColor()"/>
 
-    <label>Change dots size</label>
+    <label>Dots size</label>
     <div class="buttonGroup">
         <button class="mapButton incrementButtonLeft" onclick="app.decrementDotsSize()" title="Decrement dots size">-</button>
         <button class="mapButton incrementButtonRight" onclick="app.incrementDotsSize()" title="Increment dots size">+</button>
@@ -31,7 +32,7 @@
     <label for="strokeColor">Stroke color</label>
     <input id="strokeColor" class="colorField" type="color" onchange="app.changeStrokeColor()"/>
 
-    <label>Change stroke size</label>
+    <label>Stroke size</label>
     <div class="buttonGroup">
         <button class="mapButton incrementButtonLeft" onclick="app.decrementStrokeSize()" title="Decrement stroke size">-</button>
         <button class="mapButton incrementButtonRight" onclick="app.incrementStrokeSize()" title="Increment stroke size">+</button>
@@ -41,6 +42,8 @@
        CARTO test
     </h2>
 </div>
+
+<!-- Map -->
 <div id="map"></div>
 
 <script src="config.js"></script>
