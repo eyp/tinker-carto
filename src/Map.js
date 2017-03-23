@@ -5,97 +5,57 @@
  */
 
 /**
- * Build the style for the markers that are going to be painted in the map.
- *
- * @param feature Geo JSON data record.
- * @param style Style defined in the map.
- * @returns {{color: (string|*), fillColor: (string|*), fillOpacity: number, radius: *, weight: (number|*)}}
- */
-function buildStyle(feature, style) {
-    var radius = style.radius + feature.properties.rank_max;
-    if (radius < 0) {
-        radius = 1;
-    }
-    return {
-        color: style.strokeColor,
-        fillColor: style.fillColor,
-        fillOpacity: (feature.properties.rank_max / 100) * 7,
-        radius: radius,
-        weight: style.strokeSize
-    };
-}
-
-/**
- * Creates the objects that will be used for painting the markers.
- *
- * @param feature Geo JSON data record.
- * @param style Style defined in the map.
- * @returns {{mapShape: null, feature: null}}
- */
-function createMapDataFromFeature(feature, style) {
-    var dot = {
-        mapShape: L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], buildStyle(feature, style)),
-        feature: feature
-    };
-    // Popup label
-    var iconUrl = "img/" + feature.properties.adm0_a3.toLowerCase() + ".gif";
-    dot.mapShape.bindPopup("<img src='" + iconUrl + "'/> " + feature.properties.name + ", " + feature.properties.adm0name + "<br>Population between " + feature.properties.pop_min + " and " + feature.properties.pop_max + " people<br>Rank: " + feature.properties.rank_max);
-    return dot;
-}
-
-/**
  * Paint the markers in the map
  *
  * @param markers [] Array of markers
  * @param map Map where the markers will be added.
  */
 function paintMarkers(markers, map) {
-    markers.forEach(function (dot) {
-        dot.mapShape.addTo(map);
+    markers.forEach(function (marker) {
+        marker.mapShape.addTo(map);
     });
 }
 
+/**
+ * Constructor.
+ *
+ * @param geoData GeoJSON data.
+ * @constructor
+ */
 var Map = function (geoData) {
     var that = this;
     this.mapData = [];
     this.geoData = geoData;
-    this.style = {
-        theme: MapStyle.STREETS,
-        strokeSize: 0.5,
-        radius: -7,
-        fillColor: "#ff0033",
-        strokeColor: "#121280",
-        zoom: 4
-    };
+    this.mapStyle = new MapStyle(MapTheme.STREETS, 0.5, -7, "#ff0033", "#121280", 4);
 
     geoData.features.forEach(function (feature) {
-        that.mapData.push(createMapDataFromFeature(feature, that.style));
+        that.mapData.push(new Marker(feature, that.mapStyle));
     });
     console.log("There are", that.mapData.length, "records to paint");
     console.log("Geo data sample: ", geoData.features[0]);
 
     // Init map and main layer
-    this.map = L.map("map", {center: [50.8397819, 4.3817422], zoom: this.style.zoom});
-    this.currentLayer = this.buildTileLayer();
-    this.map.addLayer(this.currentLayer);
-};
-
-Map.prototype.changeTheme = function(theme) {
-    this.style.theme = theme;
-    this.map.removeLayer(this.currentLayer);
+    this.map = L.map("map", {center: [50.8397819, 4.3817422], zoom: this.mapStyle.zoom});
     this.currentLayer = this.buildTileLayer();
     this.map.addLayer(this.currentLayer);
 };
 
 Map.prototype.buildTileLayer = function () {
     // http://{s}.tile.osm.org/{z}/{x}/{y}.png
-    return L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/" + this.style.theme + "/tiles/256/{z}/{x}/{y}?access_token=" + mapBoxAccessToken, {
+    return L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/" + this.mapStyle.theme + "/tiles/256/{z}/{x}/{y}?access_token=" + mapBoxAccessToken, {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 12,
         minZoom: 2,
         id: mapBoxProjectId,
         accessToken: mapBoxAccessToken
     });
+};
+
+Map.prototype.changeTheme = function (theme) {
+    this.mapStyle.theme = theme;
+    this.map.removeLayer(this.currentLayer);
+    this.currentLayer = this.buildTileLayer();
+    this.map.addLayer(this.currentLayer);
 };
 
 /**
@@ -121,44 +81,44 @@ Map.prototype.refresh = function () {
     console.log("Map complete!")
 };
 
-Map.prototype.changeDotsSize = function (delta) {
+Map.prototype.changeMarkersRadius = function (delta) {
     var that = this;
     this.updateMarkers(function () {
-        that.style.radius += delta;
-        if (that.style.radius < -15) {
-            that.style.radius = -15;
+        that.mapStyle.radiusDelta += delta;
+        if (that.mapStyle.radiusDelta < -15) {
+            that.mapStyle.radiusDelta = -15;
         }
     });
 };
 
-Map.prototype.changeStrokeSize = function (delta) {
+Map.prototype.changeMarkersStrokeThickness = function (delta) {
     var that = this;
     this.updateMarkers(function () {
-        that.style.strokeSize += delta;
-        if (that.style.strokeSize < 0) {
-            that.style.strokeSize = 0;
+        that.mapStyle.strokeSize += delta;
+        if (that.mapStyle.strokeSize < 0) {
+            that.mapStyle.strokeSize = 0;
         }
     });
 };
 
-Map.prototype.changeDotsBaseColor = function (color) {
+Map.prototype.changeMarkersFillColor = function (color) {
     var that = this;
     this.updateMarkers(function () {
-        that.style.fillColor = color;
+        that.mapStyle.fillColor = color;
     });
 };
 
-Map.prototype.changeStrokeColor = function (color) {
+Map.prototype.changeMarkersStrokeColor = function (color) {
     var that = this;
     this.updateMarkers(function () {
-        that.style.strokeColor = color;
+        that.mapStyle.strokeColor = color;
     });
 };
 
 Map.prototype.updateMarkers = function (updateFunction) {
     updateFunction();
     var that = this;
-    this.mapData.forEach(function (dot) {
-        dot.mapShape.setStyle(buildStyle(dot.feature, that.style));
+    this.mapData.forEach(function (marker) {
+        marker.mapShape.setStyle(that.mapStyle.buildMarkerStyle(marker.feature));
     });
 };

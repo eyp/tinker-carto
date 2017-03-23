@@ -21,21 +21,21 @@
     </select>
 
     <label for="dotsColor">Dots color</label>
-    <input id="dotsColor" class="colorField" type="color" onchange="app.changeDotsBaseColor()"/>
+    <input id="dotsColor" class="colorField" type="color" onchange="app.changeMarkersFillColor()"/>
 
     <label>Dots size</label>
     <div class="buttonGroup">
-        <button class="mapButton incrementButtonLeft" onclick="app.decrementDotsSize()" title="Decrement dots size">-</button>
-        <button class="mapButton incrementButtonRight" onclick="app.incrementDotsSize()" title="Increment dots size">+</button>
+        <button class="mapButton incrementButtonLeft" onclick="app.decrementMarkersRadius()" title="Decrement dots size">-</button>
+        <button class="mapButton incrementButtonRight" onclick="app.incrementMarkersRadius()" title="Increment dots size">+</button>
     </div>
 
     <label for="strokeColor">Stroke color</label>
-    <input id="strokeColor" class="colorField" type="color" onchange="app.changeStrokeColor()"/>
+    <input id="strokeColor" class="colorField" type="color" onchange="app.changeMarkersStrokeColor()"/>
 
     <label>Stroke size</label>
     <div class="buttonGroup">
-        <button class="mapButton incrementButtonLeft" onclick="app.decrementStrokeSize()" title="Decrement stroke size">-</button>
-        <button class="mapButton incrementButtonRight" onclick="app.incrementStrokeSize()" title="Increment stroke size">+</button>
+        <button class="mapButton incrementButtonLeft" onclick="app.decrementMarkersStrokeThickness()" title="Decrement stroke size">-</button>
+        <button class="mapButton incrementButtonRight" onclick="app.incrementMarkersStrokeThickness()" title="Increment stroke size">+</button>
     </div>
 
     <h2 id="title">
@@ -47,6 +47,8 @@
 <div id="map"></div>
 
 <script src="config.js"></script>
+<script src="MapTheme.js"></script>
+<script src="Marker.js"></script>
 <script src="MapStyle.js"></script>
 <script src="Map.js"></script>
 <script src="CartoClient.js"></script>
@@ -57,7 +59,7 @@
         alert('Application is not properly configured, please rename config-sample.js to config.js and set it up fine');
     } else {
         var app = new App();
-        app.start();
+        app.init();
     }
 </script>
 <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
