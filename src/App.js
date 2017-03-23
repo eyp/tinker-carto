@@ -10,21 +10,17 @@ var App = function () {
     this.map = null;
 };
 
-App.prototype.paintMap = function (geoData) {
+App.prototype.requestComplete = function (event) {
+    console.log("CARTO request complete successfully");
+    var httpRequest = event.target;
+    var geoData = JSON.parse(httpRequest.responseText);
+    console.log("Geo data has been loaded and parsed, there are", geoData.features.length, "points");
     console.log("Preparing map...");
     this.map = new Map(geoData);
     document.getElementById("dotsColor").value = this.map.fillColor;
     document.getElementById("strokeColor").value = this.map.strokeColor;
     console.log("Painting data...");
     this.map.refresh();
-};
-
-App.prototype.requestComplete = function (event) {
-    console.log("CARTO request complete successfully");
-    var httpRequest = event.target;
-    var geoData = JSON.parse(httpRequest.responseText);
-    console.log("Geo data has been loaded and parsed, there are", geoData.features.length, "points");
-    this.paintMap(geoData);
 };
 
 App.prototype.requestError = function (event) {

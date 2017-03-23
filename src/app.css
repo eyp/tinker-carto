@@ -1,4 +1,62 @@
-#streetMap {
-    width: 1050px;
+body {
+    font-weight: normal;
+    font-family: Arial, serif;
+    font-size: 14px;
+}
+
+#title {
+    display: inline-block;
+    font-size: 22px;
+    float: right;
+    margin: 0 10px 0 0;
+    color: #686263;
+}
+
+#map {
+    width: 1100px;
     height: 690px;
+    border: 3px solid #928C8D;
+    border-radius: 5px;
+}
+
+#barButtons {
+    width: 1100px;
+    padding: 10px 10px;
+    border: 0;
+}
+
+.mapButton {
+    background-color: #4CAF50;
+    border: 1px solid #1B861C;
+    color: white;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0;
+    min-width: 20px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.19);
+}
+
+.mapButton:hover {
+    background-color: #1B861C;
+    border: 1px solid #4CAF50;
+}
+
+.incrementButtonLeft {
+    border-radius: 5px 0 0 5px;
+}
+
+.incrementButtonRight {
+    border-radius: 0 5px 5px 0;
+    border: 1px solid #1B861C;
+}
+
+.buttonGroup {
+    display: inline;
+}
+
+.colorField {
+    vertical-align: bottom;
 }

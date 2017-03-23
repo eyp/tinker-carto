@@ -29,10 +29,10 @@ var Map = function (geoData) {
     var that = this;
     this.mapData = [];
     this.mapStyle = MapStyle.STREETS;
-    this.strokeSize = 2;
+    this.strokeSize = 0.5;
     this.radius = 1000;
     this.fillColor = "#ff0033";
-    this.strokeColor = "#ffffff";
+    this.strokeColor = "#121280";
 
     console.log("Painting feature:", geoData.features[0]);
     console.log("Painting feature:", geoData.features[1]);
@@ -63,17 +63,17 @@ Map.prototype.changeTileLayer = function (newLayer) {
 };
 
 Map.prototype.buildTileLayer = function () {
-    return L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/' + this.mapStyle + '/tiles/256/{z}/{x}/{y}?access_token=' + mapBoxAccessToken, {
+    return L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/" + this.mapStyle + "/tiles/256/{z}/{x}/{y}?access_token=" + mapBoxAccessToken, {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 12,
-        minZoom: 4,
+        minZoom: 2,
         id: mapBoxProjectId,
         accessToken: mapBoxAccessToken
     });
 };
 
 Map.prototype.refresh = function (mapStyle) {
-    this.map = L.map('streetMap', {center: [50.8397819, 4.3817422], zoom: 7});
+    this.map = L.map("map", {center: [50.8397819, 4.3817422], zoom: 5});
     this.currentLayer = this.buildTileLayer(mapStyle);
     this.map.addLayer(this.currentLayer);
 
@@ -118,7 +118,7 @@ Map.prototype.changeDotsBaseColor = function (color) {
     this.refreshDotsStyle();
 };
 
-Map.prototype.changeDotsBaseColor = function (color) {
+Map.prototype.changeStrokeColor = function (color) {
     this.strokeColor = color;
     this.refreshDotsStyle();
 };

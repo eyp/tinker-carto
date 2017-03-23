@@ -4,36 +4,44 @@
     <meta charset="UTF-8">
     <title>CARTO test</title>
     <link href="app.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"/>
 </head>
 <body>
 
-<div id="streetMap"></div>
+<div id="barButtons">
+    <label for="mapStyle">Map style</label>
+    <select id="mapStyle" onchange="app.changeMapStyle()">
+        <option value="streets-v10" selected>Streets</option>
+        <option value="outdoors-v9">Outdoors</option>
+        <option value="light-v9">Light</option>
+        <option value="dark-v9">Dark</option>
+        <option value="satellite-v9">Satellite</option>
+        <option value="satellite-streets-v9">Satellite Streets</option>
+    </select>
 
-<label for="mapStyle">Map style</label>
-<select id="mapStyle" onchange="app.changeMapStyle()">
-    <option value="streets-v10" selected>Streets</option>
-    <option value="outdoors-v9">Outdoors</option>
-    <option value="light-v9">Light</option>
-    <option value="dark-v9">Dark</option>
-    <option value="satellite-v9">Satellite</option>
-    <option value="satellite-streets-v9">Satellite Streets</option>
-</select>
+    <label for="dotsColor">Dots color</label>
+    <input id="dotsColor" class="colorField" type="color" onchange="app.changeDotsBaseColor()"/>
 
-<label for="dotsColor">Dots color</label>
-<input id="dotsColor" type="color" onchange="app.changeDotsBaseColor()"/>
+    <label>Change dots size</label>
+    <div class="buttonGroup">
+        <button class="mapButton incrementButtonLeft" onclick="app.decrementDotsSize()" title="Decrement dots size">-</button>
+        <button class="mapButton incrementButtonRight" onclick="app.incrementDotsSize()" title="Increment dots size">+</button>
+    </div>
 
-<label>Change dots size</label>
-<button onclick="app.decrementDotsSize()" title="Decrement dots size">-</button>
-<button onclick="app.incrementDotsSize()" title="Increment dots size">+</button>
+    <label for="strokeColor">Stroke color</label>
+    <input id="strokeColor" class="colorField" type="color" onchange="app.changeStrokeColor()"/>
 
-<label for="strokeColor">Stroke color</label>
-<input id="strokeColor" type="color" onchange="app.changeStrokeColor()"/>
+    <label>Change stroke size</label>
+    <div class="buttonGroup">
+        <button class="mapButton incrementButtonLeft" onclick="app.decrementStrokeSize()" title="Decrement stroke size">-</button>
+        <button class="mapButton incrementButtonRight" onclick="app.incrementStrokeSize()" title="Increment stroke size">+</button>
+    </div>
 
-<label>Change stroke size</label>
-<button onclick="app.decrementStrokeSize()" title="Decrement stroke size">-</button>
-<button onclick="app.incrementStrokeSize()" title="Increment stroke size">+</button>
+    <h2 id="title">
+       CARTO test
+    </h2>
+</div>
+<div id="map"></div>
 
 <script src="config.js"></script>
 <script src="MapStyle.js"></script>
@@ -49,5 +57,6 @@
         app.start();
     }
 </script>
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 </body>
 </html>
