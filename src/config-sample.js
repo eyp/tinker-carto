@@ -4,4 +4,5 @@
  * Created by eyp on 22/03/2017.
  */
 
-var openStreetMapAccessToken = '';
+var mapBoxAccessToken = '';
+var mapBoxProjectId = '';

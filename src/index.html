@@ -11,9 +11,43 @@
 
 <div id="streetMap"></div>
 
+<label for="mapStyle">Map style</label>
+<select id="mapStyle" onchange="app.changeMapStyle()">
+    <option value="streets-v10" selected>Streets</option>
+    <option value="outdoors-v9">Outdoors</option>
+    <option value="light-v9">Light</option>
+    <option value="dark-v9">Dark</option>
+    <option value="satellite-v9">Satellite</option>
+    <option value="satellite-streets-v9">Satellite Streets</option>
+</select>
+
+<label for="dotsColor">Dots color</label>
+<input id="dotsColor" type="color" onchange="app.changeDotsBaseColor()"/>
+
+<label>Change dots size</label>
+<button onclick="app.decrementDotsSize()" title="Decrement dots size">-</button>
+<button onclick="app.incrementDotsSize()" title="Increment dots size">+</button>
+
+<label for="strokeColor">Stroke color</label>
+<input id="strokeColor" type="color" onchange="app.changeStrokeColor()"/>
+
+<label>Change stroke size</label>
+<button onclick="app.decrementStrokeSize()" title="Decrement stroke size">-</button>
+<button onclick="app.incrementStrokeSize()" title="Increment stroke size">+</button>
+
 <script src="config.js"></script>
+<script src="MapStyle.js"></script>
 <script src="Map.js"></script>
 <script src="CartoClient.js"></script>
 <script src="App.js"></script>
+
+<script type="text/javascript">
+    if (typeof mapBoxAccessToken === 'undefined' || typeof mapBoxProjectId === 'undefined' || mapBoxAccessToken === undefined || mapBoxProjectId === undefined) {
+        alert('Application is not properly configured, please rename config-sample.js to config.js and set it up fine');
+    } else {
+        var app = new App();
+        app.start();
+    }
+</script>
 </body>
 </html>
