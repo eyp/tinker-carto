@@ -31,6 +31,9 @@ I've added several controls in order to change the map. They are described by th
 When you click on a marker a popup is shown with the city's name, the country, the max and min population, and the 
 max rank assigned in the Geo data (_feature.properties.rank_max_ property). 
  
+As a little bonus, I've added the flag of the country in the marker's popup. For this I've used the **feature.properties.adm0_a3**
+property, that I guess follows the _ISO 3166-1 alpha-3_ standard codification. For the flags I use the ones that I've found in 
+Github's project (https://github.com/adamoliver/Country-Flags-ISO-3).
  
  
  

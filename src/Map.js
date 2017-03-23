@@ -38,7 +38,8 @@ function createMapDataFromFeature(feature, style) {
         feature: feature
     };
     // Popup label
-    dot.mapShape.bindPopup(feature.properties.name + " (" + feature.properties.adm0name + ")<br>Population between " + feature.properties.pop_min + " and " + feature.properties.pop_max + " people<br>Rank: " + feature.properties.rank_max);
+    var iconUrl = "img/" + feature.properties.adm0_a3.toLowerCase() + ".gif";
+    dot.mapShape.bindPopup("<img src='" + iconUrl + "'/> " + feature.properties.name + ", " + feature.properties.adm0name + "<br>Population between " + feature.properties.pop_min + " and " + feature.properties.pop_max + " people<br>Rank: " + feature.properties.rank_max);
     return dot;
 }
 
@@ -71,6 +72,7 @@ var Map = function (geoData) {
         that.mapData.push(createMapDataFromFeature(feature, that.style));
     });
     console.log("There are", that.mapData.length, "records to paint");
+    console.log("Geo data sample: ", geoData.features[0]);
 
     // Init map and main layer
     this.map = L.map("map", {center: [50.8397819, 4.3817422], zoom: this.style.zoom});
