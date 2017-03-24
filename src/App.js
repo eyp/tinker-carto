@@ -27,7 +27,7 @@ App.prototype.requestComplete = function (event) {
     console.log("Geo data has been loaded and parsed, there are", geoData.features.length, "points");
     console.log("Preparing map...");
     this.map = new Map(geoData);
-    document.getElementById("dotsColor").value = this.map.mapStyle.fillColor;
+    document.getElementById("markersColor").value = this.map.mapStyle.fillColor;
     document.getElementById("strokeColor").value = this.map.mapStyle.strokeColor;
     console.log("Painting data...");
     document.getElementById("messagesPanel").style.visibility = "hidden";
@@ -37,7 +37,8 @@ App.prototype.requestComplete = function (event) {
 
 App.prototype.requestError = function (event) {
     var httpRequest = event.target;
-    console.log("Error happened on CARTO request: (", httpRequest.status, ") - ", httpRequest.statusText);
+    console.error("Error happened on CARTO request: (", httpRequest.status, ") - ", httpRequest.statusText);
+    this.showStatusMessage("Cannot retrieve CARTO Geo JSON data, server error: (", httpRequest.status, ") - ", httpRequest.statusText);
 };
 
 App.prototype.showStatusMessage = function (message, type) {
@@ -83,7 +84,7 @@ App.prototype.decrementMarkersStrokeThickness = function () {
 };
 
 App.prototype.changeMarkersFillColor = function () {
-    this.map.changeMarkersFillColor(document.getElementById("dotsColor").value);
+    this.map.changeMarkersFillColor(document.getElementById("markersColor").value);
 };
 
 App.prototype.changeMarkersStrokeColor = function () {
