@@ -42,8 +42,14 @@ App.prototype.requestError = function (event) {
  * Initialize the application.
  */
 App.prototype.init = function () {
-    var cartoClient = new CartoClient();
-    cartoClient.getGeoData(this.requestComplete.bind(this), this.requestError.bind(this));
+    if (typeof mapBoxAccessToken === 'undefined' || typeof mapBoxProjectId === 'undefined' || mapBoxAccessToken === undefined || mapBoxProjectId === undefined) {
+        document.getElementById("messagesPanel").style.visibility = "visible";
+        document.getElementById("messagesPanel").innerHTML = "<h3 class='message error'>Application is not configured, please rename config-sample.js to config.js and set it up properly.</h3>";
+    } else {
+        var cartoClient = new CartoClient();
+        cartoClient.getGeoData(this.requestComplete.bind(this), this.requestError.bind(this));
+        document.getElementById("mainPanel").style.visibility = "visible";
+    }
 };
 
 App.prototype.changeTheme = function () {

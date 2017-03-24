@@ -57,14 +57,8 @@
 <script src="App.js"></script>
 
 <script type="text/javascript">
-    if (typeof mapBoxAccessToken === 'undefined' || typeof mapBoxProjectId === 'undefined' || mapBoxAccessToken === undefined || mapBoxProjectId === undefined) {
-        document.getElementById("messagesPanel").style.visibility = "visible";
-        document.getElementById("messagesPanel").innerHTML = "<h3 class='message error'>Application is not configured, please rename config-sample.js to config.js and set it up properly.</h3>";
-    } else {
-        document.getElementById("mainPanel").style.visibility = "visible";
-        var app = new App();
-        app.init();
-    }
+    var app = new App();
+    app.init();
 </script>
 <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 </body>
