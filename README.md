@@ -7,6 +7,8 @@ After cloning the project it's needed to copy or rename config-sample.js to conf
 access token and a Mapbox project id.
 
 ### Some decisions
+First of all, I must say that I'm not an expert working on maps, I've done just one or two things on side projects :).
+
 Everything is written using plain Javascript but the part that renders the map, where I'm 
  using [Leaflet 1.0.3](http://leafletjs.com/2017/01/23/leaflet-1.0.3.html). For the frontend, 
  since it's said that CARTO has its own components, I simply use HTML and a bit of CSS.
@@ -57,5 +59,6 @@ Github's project (https://github.com/adamoliver/Country-Flags-ISO-3).
 
 **We love Easter eggs**
 
-  Not a good easter egg at all, I just added the flags as a bonus to the map, because I'm not an expert  
-  working with maps, but finally I decided to add a small thing, just zoom in...
+  It isn't a good easter egg at all, I just added the flags as a bonus to the map, but after thinking a little bit 
+  I decided to add a small thing, just zoom in... Of course working with map's events I could have add another kind of
+   thing like a videogame, beatiful girl/ handsome boy picture, etc., but hey, it's something! 
