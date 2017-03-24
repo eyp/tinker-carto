@@ -4,6 +4,25 @@ body {
     font-size: 14px;
 }
 
+.message {
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.error {
+    background-color: #CC8D99;
+    color: #ffffff;
+}
+.center {
+    margin: auto;
+    width: 50%;
+}
+
+#errorPanel {
+
+}
+
 #title {
     display: inline-block;
     font-size: 22px;

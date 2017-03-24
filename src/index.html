@@ -8,44 +8,46 @@
 </head>
 <body>
 
-<!-- Controls -->
-<div id="barButtons">
-    <label for="theme">Theme</label>
-    <select id="theme" onchange="app.changeTheme()">
-        <option value="streets-v10" selected>Streets</option>
-        <option value="outdoors-v9">Outdoors</option>
-        <option value="light-v9">Light</option>
-        <option value="dark-v9">Dark</option>
-        <option value="satellite-v9">Satellite</option>
-        <option value="satellite-streets-v9">Satellite Streets</option>
-    </select>
+<div id="messagesPanel" style="visibility: hidden" class="center"></div>
+<div id="mainPanel" style="visibility: hidden" class="center">
+    <!-- Controls -->
+    <div id="barButtons">
+        <label for="theme">Theme</label>
+        <select id="theme" onchange="app.changeTheme()">
+            <option value="streets-v10" selected>Streets</option>
+            <option value="outdoors-v9">Outdoors</option>
+            <option value="light-v9">Light</option>
+            <option value="dark-v9">Dark</option>
+            <option value="satellite-v9">Satellite</option>
+            <option value="satellite-streets-v9">Satellite Streets</option>
+        </select>
 
-    <label for="dotsColor">Markers color</label>
-    <input id="dotsColor" class="colorField" type="color" onchange="app.changeMarkersFillColor()"/>
+        <label for="dotsColor">Markers color</label>
+        <input id="dotsColor" class="colorField" type="color" onchange="app.changeMarkersFillColor()"/>
 
-    <label>Markers size</label>
-    <div class="buttonGroup">
-        <button class="mapButton incrementButtonLeft" onclick="app.decrementMarkersRadius()" title="Decrement dots size">-</button>
-        <button class="mapButton incrementButtonRight" onclick="app.incrementMarkersRadius()" title="Increment dots size">+</button>
+        <label>Markers size</label>
+        <div class="buttonGroup">
+            <button class="mapButton incrementButtonLeft" onclick="app.decrementMarkersRadius()" title="Decrement dots size">-</button>
+            <button class="mapButton incrementButtonRight" onclick="app.incrementMarkersRadius()" title="Increment dots size">+</button>
+        </div>
+
+        <label for="strokeColor">Stroke color</label>
+        <input id="strokeColor" class="colorField" type="color" onchange="app.changeMarkersStrokeColor()"/>
+
+        <label>Stroke size</label>
+        <div class="buttonGroup">
+            <button class="mapButton incrementButtonLeft" onclick="app.decrementMarkersStrokeThickness()" title="Decrement stroke size">-</button>
+            <button class="mapButton incrementButtonRight" onclick="app.incrementMarkersStrokeThickness()" title="Increment stroke size">+</button>
+        </div>
+
+        <h2 id="title">
+            CARTO test
+        </h2>
     </div>
 
-    <label for="strokeColor">Stroke color</label>
-    <input id="strokeColor" class="colorField" type="color" onchange="app.changeMarkersStrokeColor()"/>
-
-    <label>Stroke size</label>
-    <div class="buttonGroup">
-        <button class="mapButton incrementButtonLeft" onclick="app.decrementMarkersStrokeThickness()" title="Decrement stroke size">-</button>
-        <button class="mapButton incrementButtonRight" onclick="app.incrementMarkersStrokeThickness()" title="Increment stroke size">+</button>
-    </div>
-
-    <h2 id="title">
-       CARTO test
-    </h2>
+    <!-- Map -->
+    <div id="map"></div>
 </div>
-
-<!-- Map -->
-<div id="map"></div>
-
 <script src="config.js"></script>
 <script src="MapTheme.js"></script>
 <script src="Marker.js"></script>
@@ -56,8 +58,10 @@
 
 <script type="text/javascript">
     if (typeof mapBoxAccessToken === 'undefined' || typeof mapBoxProjectId === 'undefined' || mapBoxAccessToken === undefined || mapBoxProjectId === undefined) {
-        alert('Application is not properly configured, please rename config-sample.js to config.js and set it up fine');
+        document.getElementById("messagesPanel").style.visibility = "visible";
+        document.getElementById("messagesPanel").innerHTML = "<h3 class='message error'>Application is not configured, please rename config-sample.js to config.js and set it up properly.</h3>";
     } else {
+        document.getElementById("mainPanel").style.visibility = "visible";
         var app = new App();
         app.init();
     }
