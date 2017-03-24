@@ -25,7 +25,6 @@ function paintMarkers(markers, map) {
 var Map = function (geoData) {
     var that = this;
     this.mapData = [];
-    this.geoData = geoData;
     this.mapStyle = new MapStyle(MapTheme.STREETS, 0.5, -7, "#ff0033", "#121280", 4);
 
     geoData.features.forEach(function (feature) {
