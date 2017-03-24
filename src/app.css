@@ -2,6 +2,8 @@ body {
     font-weight: normal;
     font-family: Arial, serif;
     font-size: 14px;
+    margin: auto;
+    width: 50%;
 }
 
 .message {
@@ -14,9 +16,15 @@ body {
     background-color: #CC8D99;
     color: #ffffff;
 }
+
+.info {
+    background-color: #4399cc;
+    color: #ffffff;
+}
+
 .center {
     margin: auto;
-    width: 50%;
+    width: 100%;
 }
 
 #errorPanel {
@@ -32,14 +40,12 @@ body {
 }
 
 #map {
-    width: 1100px;
     height: 690px;
     border: 3px solid #928C8D;
     border-radius: 5px;
 }
 
 #barButtons {
-    width: 1100px;
     padding: 10px 10px;
     border: 0;
 }

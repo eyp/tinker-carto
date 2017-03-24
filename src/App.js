@@ -30,6 +30,8 @@ App.prototype.requestComplete = function (event) {
     document.getElementById("dotsColor").value = this.map.mapStyle.fillColor;
     document.getElementById("strokeColor").value = this.map.mapStyle.strokeColor;
     console.log("Painting data...");
+    document.getElementById("messagesPanel").style.visibility = "hidden";
+    document.getElementById("mainPanel").style.visibility = "visible";
     this.map.refresh();
 };
 
@@ -38,17 +40,25 @@ App.prototype.requestError = function (event) {
     console.log("Error happened on CARTO request: (", httpRequest.status, ") - ", httpRequest.statusText);
 };
 
+App.prototype.showStatusMessage = function (message, type) {
+    if (document.getElementById("messagesPanel").style.visibility !== "visible") {
+        document.getElementById("messagesPanel").style.visibility = "visible";
+    }
+    document.getElementById("messagesPanel").innerHTML = "<h3 class='message " + type + "'>" + message + "</h3>";
+};
+
 /**
  * Initialize the application.
  */
 App.prototype.init = function () {
     if (typeof mapBoxAccessToken === 'undefined' || typeof mapBoxProjectId === 'undefined' || mapBoxAccessToken === undefined || mapBoxProjectId === undefined) {
-        document.getElementById("messagesPanel").style.visibility = "visible";
-        document.getElementById("messagesPanel").innerHTML = "<h3 class='message error'>Application is not configured, please rename config-sample.js to config.js and set it up properly.</h3>";
+        console.error("Application is not configured, please rename config-sample.js to config.js and set it up properly.");
+        this.showStatusMessage("Application is not configured, please rename config-sample.js to config.js and set it up properly.", StatusMessageType.ERROR);
     } else {
+        console.log("Retrieving information from CARTO...");
+        this.showStatusMessage("Loading...", StatusMessageType.INFO);
         var cartoClient = new CartoClient();
         cartoClient.getGeoData(this.requestComplete.bind(this), this.requestError.bind(this));
-        document.getElementById("mainPanel").style.visibility = "visible";
     }
 };
 
