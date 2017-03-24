@@ -85,3 +85,8 @@ body {
 .colorField {
     vertical-align: bottom;
 }
+
+#author {
+    font-size: small;
+    color: #8d898e;
+}
