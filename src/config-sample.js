@@ -5,4 +5,3 @@
  */
 
 var mapBoxAccessToken = '';
-var mapBoxProjectId = '';

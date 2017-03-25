@@ -3,13 +3,12 @@ body {
     font-family: Arial, serif;
     font-size: 14px;
     margin: auto;
-    width: 50%;
+    width: 75%;
 }
 
 .message {
     text-align: center;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 5px;
 }
 
 .error {
@@ -36,23 +35,23 @@ body {
     font-size: 22px;
     float: right;
     margin: 0 10px 0 0;
-    color: #686263;
+    color: #a19b9c;
 }
 
 #map {
     height: 690px;
-    border: 3px solid #928C8D;
-    border-radius: 5px;
+    border: 2px solid #dbd4d5;
+    border-radius: 2px;
 }
 
 #barButtons {
-    padding: 10px 10px;
+    padding: 5px 5px;
     border: 0;
 }
 
 .mapButton {
-    background-color: #4CAF50;
-    border: 1px solid #1B861C;
+    background-color: #4399cc;
+    border: 0;
     color: white;
     padding: 0;
     text-align: center;
@@ -66,17 +65,13 @@ body {
 }
 
 .mapButton:hover {
-    background-color: #1B861C;
-    border: 1px solid #4CAF50;
+    background-color: #3564c3;
 }
 
 .incrementButtonLeft {
-    border-radius: 5px 0 0 5px;
 }
 
 .incrementButtonRight {
-    border-radius: 0 5px 5px 0;
-    border: 1px solid #1B861C;
 }
 
 .buttonGroup {

@@ -1,6 +1,6 @@
 ## CARTO test solution
 This simple project is an application that gives a solution for the problem proposed by CARTO 
-in [Frontend CARTO test](https://gist.github.com/xavijam/8bf55f5e4da51bc79d94d676a471f77b).
+in[Frontend CARTO test](https://gist.github.com/xavijam/8bf55f5e4da51bc79d94d676a471f77b).
 
 ### Setup
 After cloning the project it's needed to copy or rename config-sample.js to config.js and provide a Mapbox
@@ -10,19 +10,26 @@ access token and a Mapbox project id.
 First of all, I must say that I'm not an expert working on maps, I've done just one or two things on side projects :).
 
 Everything is written using plain Javascript but the part that renders the map, where I'm 
- using [Leaflet 1.0.3](http://leafletjs.com/2017/01/23/leaflet-1.0.3.html). For the frontend, 
+ using[Leaflet 1.0.3](http://leafletjs.com/2017/01/23/leaflet-1.0.3.html). For the frontend, 
  since it's said that CARTO has its own components, I simply use HTML and a bit of CSS.
  
 Also, instead of reading the file result of the query proposed, I do an AJAX call to CARTO's server and 
  retrieve the Geo JSON data from there.
  
-The map is built once the Geo data is retrieved. Since it could have lot of information, I've decided
- to init with a medium zoom, because if not the map loads more slowly. Related to this, I paint the markers
- asynchronously, so the map is painted almost immediately, and the markers appears in intervals. This way
- the user doesn't have to wait to see a map with some data, and the map doesn't get stalled. 
+The application consists on 3 main classes: App, Map and LeafletFacade, so the interface (index.html) only depends
+on App, App depends on Map and Map on LeafletFacade, as a typical n-tier layer application.
 
-I've tried to write a clean code, but to be honest, I know it always could be improved.
+UI --> App --> Map --> LeafletFacade
+         |
+          ---> CartoFacade
+
+The purpose of LeafletFacade to isolate the library used. This is the only class that depends directly on the library 
+used to manage the map, and it could be replaced more or less easily.
  
+The map is built once the Geo data is retrieved. All records are in a[FeatureGroup](http://leafletjs.com/reference.html#featuregroup).
+This way they can be shown all at once, and the map is shown faster than if I had add each marker to the map individually.
+Also, with this class is possible to bring to front or back the markers layer with a function call.
+
 ### The map
  
 The size of the markers are based on the **feature.properties.rank_max** property. Higher the rank, bigger the marker.
@@ -48,9 +55,10 @@ Github's project (https://github.com/adamoliver/Country-Flags-ISO-3).
 **How would you implement a choropleth map?**
 
  Well, as I've explained, I've tried to do it in the current map, but obviously, I don't 
- have the resources right now to draw the surfaces of every region or city within the GEO JSON data. So what I've done, is using
- one of the properties of the records (rank_max) that I thought it was for representing the population density of a record. So I've
- given more importance to that record setting more oppacity and size to the marker.
+ have the resources right now to draw the surfaces of every region or city within the Geo JSON data. So what I've done, is using
+ one of the properties of the records (rank_max) that I assumed it was for representing the population density of a record. Then I've
+ given more importance to that record setting more opacity and size to the marker.
+ Making the markers huge you will be able to appreciate the difference between more dense cities, and less dense ones.
   
 **Do you feel a legend would be needed?** 
 
