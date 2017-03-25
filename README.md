@@ -19,10 +19,10 @@ Also, instead of reading the file result of the query proposed, I do an AJAX cal
 The application consists on 3 main classes: App, Map and LeafletFacade, so the interface (index.html) only depends
 on App, App depends on Map and Map on LeafletFacade, as a typical n-tier layer application.
 
-UI --> App --> Map --> LeafletFacade
+    UI --> App --> Map --> LeafletFacade
 
-         |
-          ---> CartoFacade
+            |
+            ---> CartoFacade
 
 The purpose of LeafletFacade to isolate the library used. This is the only class that depends directly on the library 
 used to manage the map, and it could be replaced more or less easily.
