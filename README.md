@@ -20,7 +20,6 @@ The application consists on 3 main classes: App, Map and LeafletFacade, so the i
 on App, App depends on Map and Map on LeafletFacade, as a typical n-tier layer application.
 
     UI --> App --> Map --> LeafletFacade
-
             |
             ---> CartoFacade
 
