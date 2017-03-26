@@ -30,6 +30,8 @@ The map is built once the Geo data is retrieved. All records are in a[FeatureGro
 This way they can be shown all at once, and the map is shown faster than if I had add each marker to the map individually.
 Also, with this class is possible to bring to front or back the markers layer with a function call.
 
+Finally I've added some very basic _spec tests_ that can be run opening the file _spec-runner.html_. Bear in mind that the config.js 
+file must be properly configured with the Mapbox's access token.
 ### The map
  
 The size of the markers are based on the **feature.properties.rank_max** property. Higher the rank, bigger the marker.
