@@ -46,7 +46,7 @@ var Map = function () {
             var that = this;
 
             // Init map and main layer
-            this.map = LeafletFacade.createMap(this.style.zoom);
+            this.map = LeafletFacade.createMap([40.4000262645, -3.683351686], this.style.zoom);
             this.currentLayer = LeafletFacade.changeTileLayer(this.map, this.style.theme);
             LeafletFacade.onMaxZoom(this.map, function () {
                 alert("With this map you can't stalk your neighbourgs, don't zoom in more!")
@@ -54,7 +54,9 @@ var Map = function () {
 
             var markers = [];
             geoData.features.forEach(function (feature) {
-                var marker = LeafletFacade.createMarker(feature, buildMarkerStyle(feature, that.style));
+                var iconUrl = "img/" + feature.properties.adm0_a3.toLowerCase() + ".gif";
+                var popupHtml = "<img src='" + iconUrl + "'/> " + feature.properties.name + ", " + feature.properties.adm0name + "<br>Population " + feature.properties.pop_max + " people<br>Rank: " + feature.properties.rank_max;
+                var marker = LeafletFacade.createMarker(feature, buildMarkerStyle(feature, that.style), popupHtml);
                 var key = feature.properties.name.toLowerCase();
                 if (!that.hashData.hasOwnProperty(key)) {
                     that.hashData[key] = [];

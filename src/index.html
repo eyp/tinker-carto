@@ -13,7 +13,7 @@
 <div class="container-fluid">
     <div id="messagesPanel" style="visibility: hidden" class="row"></div>
     <div id="mainPanel" style="visibility: hidden" class="row">
-        <h2 id="title" class="row">
+        <h2 id="title" class="row pull-right">
             CARTO test
         </h2>
         <!-- Map & controls-->
@@ -70,7 +70,7 @@
                 <div class="form-group">
                     <label for="search">Search</label>
                     <input type="text" value="" id="search" class="form-control"
-                           onkeydown="app.search();" oninput="app.search();" placeholder="Exact name of city..."/>
+                           onkeydown="app.search()" oninput="app.search()" placeholder="Exact city's name..."/>
                     <span id="searchResultStatus" class="help-block"></span>
                     <ul id="searchResults" class="list-group"></ul>
                 </div>

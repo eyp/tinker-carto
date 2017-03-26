@@ -7,8 +7,8 @@
  */
 
 var LeafletFacade = {
-    createMap: function (initialZoom) {
-        return L.map("map", {center: [50.8397819, 4.3817422], zoom: initialZoom});
+    createMap: function (coords, initialZoom) {
+        return L.map("map", {center: [coords[0], coords[1]], zoom: initialZoom});
     },
 
     buildTileLayer: function (theme) {
@@ -22,13 +22,12 @@ var LeafletFacade = {
         });
     },
 
-    createMarker: function (feature, style) {
-        var iconUrl = "img/" + feature.properties.adm0_a3.toLowerCase() + ".gif";
+    createMarker: function (feature, style, popupHtml) {
         var marker = {
             mapShape: L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], style),
             feature: feature
         };
-        marker.mapShape.bindPopup("<img src='" + iconUrl + "'/> " + feature.properties.name + ", " + feature.properties.adm0name + "<br>Population between " + feature.properties.pop_min + " and " + feature.properties.pop_max + " people<br>Rank: " + feature.properties.rank_max);
+        marker.mapShape.bindPopup(popupHtml);
         return marker;
     },
 

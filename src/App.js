@@ -38,6 +38,16 @@ var App = function () {
         });
     }
 
+    function showSearchResultStatusMessage(resultsLength) {
+        if (resultsLength === 1) {
+            document.getElementById("searchResultStatus").innerHTML = "<small>Found " + resultsLength + " city</small>";
+        } else if (resultsLength > 1) {
+            document.getElementById("searchResultStatus").innerHTML = "<small>Found " + resultsLength + " cities</small>";
+        } else {
+            document.getElementById("searchResultStatus").innerHTML = "<small>Cities not found</small>";
+        }
+    }
+
     return {
         map: null,
 
@@ -131,9 +141,10 @@ var App = function () {
                 console.info("Found", searchResult.length, "cities with name", cityName, ":", searchResult);
                 // Clear search result DOM list
                 clearSearchResult();
+                // Paint result status message
+                showSearchResultStatusMessage(searchResult.length);
                 // Paint results
                 if (searchResult.length > 0) {
-                    document.getElementById("searchResultStatus").innerHTML = "<small>Found " + searchResult.length + " cities</small>";
                     // If only 1 result found, then open the popup directly without painting anything
                     if (searchResult.length === 1) {
                         // Paint results
@@ -143,8 +154,6 @@ var App = function () {
                         // Paint results
                         buildSearchResultList(this.map, searchResult);
                     }
-                } else {
-                    document.getElementById("searchResultStatus").innerHTML = "<small>Cities not found</small>";
                 }
             }
         }
