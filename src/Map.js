@@ -134,8 +134,14 @@ var Map = function () {
             return [];
         },
 
+        /**
+         * Show the popup of a marker, and center the maps on it. Also change the zoom to 4.
+         *
+         * @param marker A marker in the map.
+         */
         showMarkerPopup: function (marker) {
-            marker.mapShape.openPopup();
+            LeafletFacade.openPopup(marker.mapShape);
+            LeafletFacade.setMapView(this.map, marker.feature.geometry.coordinates, 4);
         }
     }
 };

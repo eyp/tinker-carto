@@ -38,12 +38,12 @@ Also I've tried to make a kind of _choropleth_ map, assigning a different opacit
  
 I've added several controls in order to change the map. They are described by themselves:
 
-* Theme: You can choose different themes for the map.
-* Markers color: Changes the color of the circles that represent the cities.
-* Markers size: Increments or decrements the size of the circles.
-* Stroke color: Changes the circles' stroke color (circle's border).
-* Stroke size: Changes the thickness of the circles' stroke.
-* Search: Type the name of a city, it isn't case sensitive. It must be the exact name. Try for example _san carlos_
+* **Theme**: You can choose different themes for the map.
+* **Markers color**: Changes the color of the circles that represent the cities.
+* **Markers size**: Increments or decrements the size of the circles.
+* **Stroke color**: Changes the circles' stroke color (circle's border).
+* **Stroke size**: Changes the thickness of the circles' stroke.
+* **Search cities**: Type the name of a city, it isn't case sensitive. It must be the exact name. Try for example _san carlos_
  
 When you click on a marker a popup is shown with the city's name, the country, the max and min population, and the 
 max rank assigned in the Geo data (_feature.properties.rank_max_ property). 
@@ -51,8 +51,6 @@ max rank assigned in the Geo data (_feature.properties.rank_max_ property).
 As a little bonus, I've added the flag of the country in the marker's popup. For this I've used the **feature.properties.adm0_a3**
 property, that I guess follows the _ISO 3166-1 alpha-3_ standard codification. For the flags I use the ones that I've found in 
 Github's project (https://github.com/adamoliver/Country-Flags-ISO-3).
-
- Another added feature is the possibility to look for a city: Type the name of a city, it isn't case sensitive.
 
 ### Answering the questions
 **How would you implement a choropleth map?**
@@ -65,8 +63,9 @@ Github's project (https://github.com/adamoliver/Country-Flags-ISO-3).
   
 **Do you feel a legend would be needed?** 
 
-  In the current map, I don't think a legend is needed. But if we want one, we could add
-  a legend to tell the user why some markers are bigger than others, and why their colors are more intense.
+  In the current map, I don't think a legend is needed because all markers have the same color and have the same form. 
+  But if we want one, we could add a legend to tell the user why some markers are bigger than others, and why their colors 
+  are more intense.
 
 **We love Easter eggs**
 

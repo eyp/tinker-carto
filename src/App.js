@@ -136,6 +136,8 @@ var App = function () {
                     document.getElementById("searchResultStatus").innerHTML = "<small>Found " + searchResult.length + " cities</small>";
                     // If only 1 result found, then open the popup directly without painting anything
                     if (searchResult.length === 1) {
+                        // Paint results
+                        buildSearchResultList(this.map, searchResult);
                         this.map.showMarkerPopup(searchResult[0]);
                     } else {
                         // Paint results

@@ -57,5 +57,13 @@ var LeafletFacade = {
                 callback();
             }
         });
+    },
+
+    openPopup: function (marker) {
+        marker.openPopup();
+    },
+
+    setMapView: function (map, coords, zoom) {
+        map.flyTo([coords[1], coords[0]], zoom);
     }
 };
