@@ -1,9 +1,4 @@
 body {
-    font-weight: normal;
-    font-family: Arial, serif;
-    font-size: 14px;
-    margin: auto;
-    width: 75%;
 }
 
 .message {
@@ -26,14 +21,13 @@ body {
     width: 100%;
 }
 
-#errorPanel {
-
+#mainPanel {
+    padding: 25px;
 }
-
 #title {
     display: inline-block;
     font-size: 22px;
-    float: right;
+    /*float: right;*/
     margin: 0 10px 0 0;
     color: #a19b9c;
 }
@@ -45,44 +39,32 @@ body {
 }
 
 #barButtons {
-    padding: 5px 5px;
-    border: 0;
+    padding-right: 40px;
 }
 
 .mapButton {
-    background-color: #4399cc;
-    border: 0;
-    color: white;
-    padding: 0;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 0;
-    min-width: 20px;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.19);
     cursor: pointer;
 }
 
 .mapButton:hover {
-    background-color: #3564c3;
-}
-
-.incrementButtonLeft {
-}
-
-.incrementButtonRight {
-}
-
-.buttonGroup {
-    display: inline;
-}
-
-.colorField {
-    vertical-align: bottom;
+    cursor: pointer;
 }
 
 #author {
     font-size: small;
     color: #8d898e;
 }
+
+#searchResults {
+    margin-top: 5px;
+}
+
+#searchResults li {
+    cursor: pointer;
+}
+
+#searchResults li:hover {
+    cursor: pointer;
+    background-color: aliceblue;
+}
+

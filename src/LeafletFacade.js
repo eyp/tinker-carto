@@ -35,6 +35,7 @@ var LeafletFacade = {
     createMarkersGroup: function (map, markers) {
         var markersGroup = L.featureGroup(markers);
         markersGroup.addTo(map);
+        return markersGroup;
     },
 
     changeTileLayer: function (map, theme, currentLayer) {

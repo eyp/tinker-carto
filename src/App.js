@@ -12,6 +12,32 @@
  * @constructor
  */
 var App = function () {
+    /**
+     * Deletes all previous search results.
+     */
+    function clearSearchResult() {
+        var domResultList = document.getElementById("searchResults");
+        while (domResultList.firstChild) {
+            domResultList.removeChild(domResultList.firstChild);
+        }
+    }
+
+    function buildSearchResultList(map, searchResult) {
+        searchResult.forEach(function (result) {
+            var li = document.createElement("li");
+            li.classList = "list-group-item";
+            li.onclick = function () {map.showMarkerPopup(result);};
+            // Country flag
+            var img = document.createElement("img");
+            img.src = "img/" + result.feature.properties.adm0_a3.toLowerCase() + ".gif";
+            // City name
+            var text = document.createTextNode(" " + result.feature.properties.name);
+            li.appendChild(img);
+            li.appendChild(text);
+            document.getElementById("searchResults").appendChild(li);
+        });
+    }
+
     return {
         map: null,
 
@@ -91,6 +117,34 @@ var App = function () {
 
         changeMarkersStrokeColor: function () {
             this.map.changeMarkersStrokeColor(document.getElementById("strokeColor").value);
+        },
+
+        /**
+         * Search a city in the map.
+         */
+        search: function () {
+            // Name of the city typed by the user
+            var cityName = document.getElementById("search").value;
+            if (cityName.length >= 3) {
+                console.debug("Searching city with name:", cityName);
+                var searchResult = this.map.searchCity(cityName);
+                console.info("Found", searchResult.length, "cities with name", cityName, ":", searchResult);
+                // Clear search result DOM list
+                clearSearchResult();
+                // Paint results
+                if (searchResult.length > 0) {
+                    document.getElementById("searchResultStatus").innerHTML = "<small>Found " + searchResult.length + " cities</small>";
+                    // If only 1 result found, then open the popup directly without painting anything
+                    if (searchResult.length === 1) {
+                        this.map.showMarkerPopup(searchResult[0]);
+                    } else {
+                        // Paint results
+                        buildSearchResultList(this.map, searchResult);
+                    }
+                } else {
+                    document.getElementById("searchResultStatus").innerHTML = "<small>Cities not found</small>";
+                }
+            }
         }
     }
 };

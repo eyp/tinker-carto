@@ -11,7 +11,7 @@ First of all, I must say that I'm not an expert working on maps, I've done just 
 
 Everything is written using plain Javascript but the part that renders the map, where I'm 
  using[Leaflet 1.0.3](http://leafletjs.com/2017/01/23/leaflet-1.0.3.html). For the frontend, 
- since it's said that CARTO has its own components, I simply use HTML and a bit of CSS.
+ since it's said that CARTO has its own components, I simply use HTML and a bit of CSS, along Bootstrap for the layout and some styles.
  
 Also, instead of reading the file result of the query proposed, I do an AJAX call to CARTO's server and 
  retrieve the Geo JSON data from there.
@@ -39,10 +39,11 @@ Also I've tried to make a kind of _choropleth_ map, assigning a different opacit
 I've added several controls in order to change the map. They are described by themselves:
 
 * Theme: You can choose different themes for the map.
-* Dots color: Changes the color of the data represented.
-* Dots size: Increments or decrements the size of the dots.
-* Stroke color: Changes the color of the dots' border.
-* Stroke size: Changes the thickness of the dots' border.
+* Markers color: Changes the color of the circles that represent the cities.
+* Markers size: Increments or decrements the size of the circles.
+* Stroke color: Changes the circles' stroke color (circle's border).
+* Stroke size: Changes the thickness of the circles' stroke.
+* Search: Type the name of a city, it isn't case sensitive. It must be the exact name. Try for example _san carlos_
  
 When you click on a marker a popup is shown with the city's name, the country, the max and min population, and the 
 max rank assigned in the Geo data (_feature.properties.rank_max_ property). 
@@ -50,7 +51,9 @@ max rank assigned in the Geo data (_feature.properties.rank_max_ property).
 As a little bonus, I've added the flag of the country in the marker's popup. For this I've used the **feature.properties.adm0_a3**
 property, that I guess follows the _ISO 3166-1 alpha-3_ standard codification. For the flags I use the ones that I've found in 
 Github's project (https://github.com/adamoliver/Country-Flags-ISO-3).
- 
+
+ Another added feature is the possibility to look for a city: Type the name of a city, it isn't case sensitive.
+
 ### Answering the questions
 **How would you implement a choropleth map?**
 

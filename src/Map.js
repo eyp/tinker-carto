@@ -32,7 +32,6 @@ var Map = function () {
     }
 
     return {
-        data: [],
         hashData: {},
         style: new MapStyle(MapTheme.STREETS, 0.5, -6, "#ff0033", "#121280", 2),
 
@@ -56,15 +55,14 @@ var Map = function () {
             var markers = [];
             geoData.features.forEach(function (feature) {
                 var marker = LeafletFacade.createMarker(feature, buildMarkerStyle(feature, that.style));
-                var key = feature.properties.name;
+                var key = feature.properties.name.toLowerCase();
                 if (!that.hashData.hasOwnProperty(key)) {
                     that.hashData[key] = [];
                 }
                 that.hashData[key].push(marker);
-                that.data.push(marker);
                 markers.push(marker.mapShape);
             });
-            console.info("There are", that.data.length, "markers to paint");
+            console.info("There are", geoData.features.length, "markers to paint");
             console.debug("Geo data sample: ", geoData.features[0]);
 
             LeafletFacade.createMarkersGroup(this.map, markers);
@@ -121,9 +119,23 @@ var Map = function () {
                     });
                 }
             }
-//            this.data.forEach(function (marker) {
-//                LeafletFacade.setMarkerStyle(marker.mapShape, that.buildMarkerStyle(marker.feature, that.style));
-//            });
+        },
+
+        /**
+         * Search a city by name. The result is an array of markers.
+         *
+         * @param name Name of the city to search.
+         * @returns {*} Array of markers.
+         */
+        searchCity: function (name) {
+            if (this.hashData.hasOwnProperty(name.toLowerCase())) {
+                return this.hashData[name.toLowerCase()];
+            }
+            return [];
+        },
+
+        showMarkerPopup: function (marker) {
+            marker.mapShape.openPopup();
         }
     }
 };

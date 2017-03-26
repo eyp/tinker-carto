@@ -5,50 +5,77 @@
     <title>CARTO test</title>
     <link href="app.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
 
-<div id="appPanel" class="center">
-    <div id="messagesPanel" style="visibility: hidden"></div>
-    <div id="mainPanel" style="visibility: hidden">
-        <!-- Controls -->
-        <div id="barButtons">
-            <label for="theme">Theme</label>
-            <select id="theme" onchange="app.changeTheme()">
-                <option value="streets-v10" selected>Streets</option>
-                <option value="outdoors-v9">Outdoors</option>
-                <option value="light-v9">Light</option>
-                <option value="dark-v9">Dark</option>
-                <option value="satellite-v9">Satellite</option>
-                <option value="satellite-streets-v9">Satellite Streets</option>
-            </select>
-
-            <label for="markersColor">Markers color</label>
-            <input id="markersColor" class="colorField" type="color" onchange="app.changeMarkersFillColor()"/>
-
-            <label>Markers size</label>
-            <div class="buttonGroup">
-                <button class="mapButton incrementButtonLeft" onclick="app.decrementMarkersRadius()" title="Decrement markers size">-</button>
-                <button class="mapButton incrementButtonRight" onclick="app.incrementMarkersRadius()" title="Increment markers size">+</button>
+<div class="container-fluid">
+    <div id="messagesPanel" style="visibility: hidden" class="row"></div>
+    <div id="mainPanel" style="visibility: hidden" class="row">
+        <h2 id="title" class="row">
+            CARTO test
+        </h2>
+        <!-- Map & controls-->
+        <div class="row">
+            <div class="col-md-9 main">
+                <div id="map"></div>
+                <div id="author">By Eduardo Yáñez Parareda 2017</div>
             </div>
 
-            <label for="strokeColor">Stroke color</label>
-            <input id="strokeColor" class="colorField" type="color" onchange="app.changeMarkersStrokeColor()"/>
+            <!-- Controls -->
+            <div id="barButtons" class="col-md-3 sidebar">
+                <div class="form-group">
+                    <label for="theme">Theme</label>
+                    <select id="theme" class="form-control" onchange="app.changeTheme()">
+                        <option value="streets-v10" selected>Streets</option>
+                        <option value="outdoors-v9">Outdoors</option>
+                        <option value="light-v9">Light</option>
+                        <option value="dark-v9">Dark</option>
+                        <option value="satellite-v9">Satellite</option>
+                        <option value="satellite-streets-v9">Satellite Streets</option>
+                    </select>
+                </div>
 
-            <label>Stroke size</label>
-            <div class="buttonGroup">
-                <button class="mapButton incrementButtonLeft" onclick="app.decrementMarkersStrokeThickness()" title="Decrement stroke size">-</button>
-                <button class="mapButton incrementButtonRight" onclick="app.incrementMarkersStrokeThickness()" title="Increment stroke size">+</button>
+                <div class="form-group">
+                    <label for="markersColor">Markers color</label>
+                    <input id="markersColor" class="form-control" type="color" onchange="app.changeMarkersFillColor()"/>
+                </div>
+                <div class="form-group">
+                    <label>Markers size</label>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary mapButton" onclick="app.decrementMarkersRadius()"
+                                title="Decrement markers size">-
+                        </button>
+                        <button type="button" class="btn btn-primary mapButton" onclick="app.incrementMarkersRadius()"
+                                title="Increment markers size">+
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="strokeColor">Stroke color</label>
+                    <input id="strokeColor" class="form-control" type="color" onchange="app.changeMarkersStrokeColor()"/>
+                </div>
+                <div class="form-group">
+                    <label>Stroke size</label>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary mapButton" onclick="app.decrementMarkersStrokeThickness()"
+                                title="Decrement stroke size">-
+                        </button>
+                        <button type="button" class="btn btn-primary mapButton" onclick="app.incrementMarkersStrokeThickness()"
+                                title="Increment stroke size">+
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="search">Search</label>
+                    <input type="text" value="" id="search" class="form-control"
+                           onkeydown="app.search();" oninput="app.search();" placeholder="Exact name of city..."/>
+                    <div id="searchResultStatus"></div>
+                    <ul id="searchResults" class="list-group"></ul>
+                </div>
             </div>
-            <h2 id="title">
-                CARTO test
-            </h2>
         </div>
-
-        <!-- Map -->
-        <div id="map"></div>
-        <div id="author" class="center">By Eduardo Yáñez Parareda 2017</div>
-
     </div>
 </div>
 <script src="config.js"></script>
@@ -65,5 +92,9 @@
     app.init();
 </script>
 <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 </body>
 </html>
