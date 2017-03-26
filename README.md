@@ -4,7 +4,7 @@ in[Frontend CARTO test](https://gist.github.com/xavijam/8bf55f5e4da51bc79d94d676
 
 ### Setup
 After cloning the project it's needed to copy or rename config-sample.js to config.js and provide a Mapbox
-access token.
+access token. Then simply open _src/index.html_ to start the application.
 
 ### Some decisions
 First of all, I must say that I'm not an expert working on maps, I've done just one or two things on side projects :).
